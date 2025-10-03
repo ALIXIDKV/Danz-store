@@ -1,0 +1,1111 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Danz Store - Hosting SA-MP Premium</title>
+    
+    <meta property="og:title" content="Danz Store - Hosting SA-MP Premium Terbaik">
+    <meta property="og:description" content="Hosting SA-MP Premium dengan server stabil, performa optimal, dan harga terjangkau. Uptime 99.9% & support 24/7.">
+    <meta property="og:image" content="https://files.catbox.moe/4n7clq.jpg">
+    <meta property="og:url" content="https://danz-store.vercel.app">
+    <meta property="og:type" content="website">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+        
+        /* Loading Screen */
+        #loading-page {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.8s ease;
+        }
+        
+        .loading-content {
+            text-align: center;
+            animation: fadeInUp 0.8s ease;
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .loading-logo {
+            font-size: 56px;
+            font-weight: 800;
+            color: white;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-shadow: 0 4px 20px rgba(0,0,0,0.3);
+        }
+        
+        .loading-logo i {
+            margin-right: 15px;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+        
+        .welcome-text {
+            font-size: 28px;
+            color: white;
+            margin-bottom: 40px;
+            opacity: 0.9;
+        }
+        
+        .loading-bar-container {
+            width: 350px;
+            height: 8px;
+            background-color: rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            overflow: hidden;
+            margin-bottom: 20px;
+            backdrop-filter: blur(10px);
+        }
+        
+        .loading-bar {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, #fff, #f0f0f0);
+            border-radius: 20px;
+            transition: width 0.3s ease;
+            box-shadow: 0 0 20px rgba(255,255,255,0.5);
+        }
+        
+        .loading-percentage {
+            color: white;
+            font-size: 20px;
+            font-weight: 600;
+        }
+        
+        /* Header */
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 40px 0;
+            text-align: center;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .logo {
+            font-size: 42px;
+            font-weight: 900;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .logo i {
+            margin-right: 12px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .tagline {
+            color: #666;
+            font-size: 16px;
+            font-weight: 500;
+        }
+        
+        /* Navigation */
+        nav {
+            background: white;
+            padding: 20px;
+            border-radius: 20px;
+            margin: 25px auto;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+            max-width: 1200px;
+        }
+        
+        nav ul {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        
+        nav ul li a {
+            text-decoration: none;
+            color: #555;
+            font-weight: 600;
+            padding: 12px 24px;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        nav ul li a:hover {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
+        }
+        
+        nav ul li a.active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
+        }
+        
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        /* Section */
+        .section {
+            display: none;
+            padding: 50px 40px;
+            background: white;
+            border-radius: 30px;
+            margin: 30px 0;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+        }
+        
+        .section.active {
+            display: block;
+            animation: fadeIn 0.6s ease;
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .section-title {
+            font-size: 38px;
+            font-weight: 800;
+            margin-bottom: 15px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .section-subtitle {
+            color: #777;
+            margin-bottom: 40px;
+            font-size: 18px;
+        }
+        
+        /* Product Grid */
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 30px;
+        }
+        
+        .product-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 2px solid #f0f0f0;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 60px rgba(102, 126, 234, 0.2);
+            border-color: #667eea;
+        }
+        
+        .product-image {
+            height: 220px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .product-image::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
+        }
+        
+        .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.4s ease;
+        }
+        
+        .product-card:hover .product-image img {
+            transform: scale(1.1);
+        }
+        
+        .product-info {
+            padding: 25px;
+        }
+        
+        .product-title {
+            font-weight: 700;
+            font-size: 20px;
+            margin-bottom: 12px;
+            color: #333;
+        }
+        
+        .product-price {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 800;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        
+        .btn {
+            padding: 14px 28px;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            font-size: 15px;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            width: 100%;
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 30px rgba(102, 126, 234, 0.4);
+        }
+        
+        /* Features */
+        .product-features {
+            margin: 50px 0;
+            padding: 40px;
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.05), rgba(118, 75, 162, 0.05));
+            border-radius: 20px;
+        }
+        
+        .product-features h3 {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 30px;
+            color: #333;
+        }
+        
+        .features-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+        }
+        
+        .feature-item {
+            display: flex;
+            align-items: center;
+            padding: 18px 20px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+        }
+        
+        .feature-item:hover {
+            transform: translateX(5px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.15);
+        }
+        
+        .feature-item i {
+            margin-right: 15px;
+            font-size: 24px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        /* Package Cards */
+        .package-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+        
+        .package-card {
+            border: 3px solid #e0e0e0;
+            border-radius: 20px;
+            padding: 30px 25px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            background: white;
+        }
+        
+        .package-card:hover {
+            border-color: #667eea;
+            transform: translateY(-8px);
+            box-shadow: 0 15px 40px rgba(102, 126, 234, 0.2);
+        }
+        
+        .package-card.selected {
+            border-color: #667eea;
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.08), rgba(118, 75, 162, 0.08));
+            box-shadow: 0 15px 40px rgba(102, 126, 234, 0.25);
+        }
+        
+        .package-name {
+            font-size: 22px;
+            font-weight: 800;
+            margin-bottom: 15px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .package-price {
+            font-size: 32px;
+            font-weight: 900;
+            margin-bottom: 20px;
+            color: #333;
+        }
+        
+        .package-features {
+            text-align: left;
+            margin-bottom: 20px;
+        }
+        
+        .package-feature {
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            font-size: 15px;
+        }
+        
+        .package-feature i {
+            margin-right: 10px;
+            color: #667eea;
+            font-size: 16px;
+        }
+        
+        /* Payment Options */
+        .payment-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 25px;
+            margin: 40px 0;
+        }
+        
+        .payment-option {
+            border: 3px solid #e0e0e0;
+            border-radius: 20px;
+            padding: 35px 25px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            background: white;
+        }
+        
+        .payment-option:hover {
+            border-color: #667eea;
+            transform: translateY(-8px);
+            box-shadow: 0 15px 40px rgba(102, 126, 234, 0.2);
+        }
+        
+        .payment-option.selected {
+            border-color: #667eea;
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.08), rgba(118, 75, 162, 0.08));
+        }
+        
+        .payment-icon {
+            font-size: 48px;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .payment-option h3 {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        
+        /* Testimonials */
+        .testimonials-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 30px;
+            margin: 40px 0;
+        }
+        
+        .testimonial-card {
+            background: white;
+            border: 2px solid #f0f0f0;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+        }
+        
+        .testimonial-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.1);
+            border-color: #667eea;
+        }
+        
+        .testimonial-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .user-avatar {
+            font-size: 48px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-right: 15px;
+        }
+        
+        .rating {
+            color: #ffa500;
+            font-size: 16px;
+        }
+        
+        .testimonial-cta {
+            text-align: center;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 60px 40px;
+            border-radius: 30px;
+            margin-top: 50px;
+            box-shadow: 0 20px 60px rgba(102, 126, 234, 0.3);
+        }
+        
+        .testimonial-cta h3 {
+            font-size: 32px;
+            font-weight: 800;
+            margin-bottom: 15px;
+        }
+        
+        .testimonial-btn {
+            background-color: white;
+            color: #667eea;
+            padding: 18px 36px;
+            border-radius: 15px;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 700;
+            font-size: 17px;
+            transition: all 0.3s ease;
+            margin: 30px 0;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+        
+        .testimonial-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.25);
+        }
+        
+        .stats-container {
+            display: flex;
+            justify-content: center;
+            gap: 60px;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+        
+        .stat-item {
+            text-align: center;
+        }
+        
+        .stat-number {
+            font-size: 42px;
+            font-weight: 900;
+            margin-bottom: 8px;
+        }
+        
+        .whatsapp-btn {
+            background-color: #25D366;
+            color: white;
+            padding: 16px 32px;
+            border-radius: 15px;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 25px rgba(37, 211, 102, 0.3);
+        }
+        
+        .whatsapp-btn:hover {
+            background-color: #20a856;
+            transform: translateY(-3px);
+            box-shadow: 0 12px 35px rgba(37, 211, 102, 0.4);
+        }
+        
+        .telegram-btn {
+            background-color: #0088cc;
+            color: white;
+            padding: 16px 32px;
+            border-radius: 15px;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 25px rgba(0, 136, 204, 0.3);
+        }
+        
+        .telegram-btn:hover {
+            background-color: #0077b3;
+            transform: translateY(-3px);
+            box-shadow: 0 12px 35px rgba(0, 136, 204, 0.4);
+        }
+        
+        footer {
+            text-align: center;
+            padding: 30px;
+            color: white;
+            font-size: 15px;
+            margin-top: 50px;
+        }
+        
+        @media (max-width: 768px) {
+            .logo {
+                font-size: 32px;
+            }
+            
+            .section-title {
+                font-size: 28px;
+            }
+            
+            .section {
+                padding: 30px 20px;
+            }
+            
+            nav ul {
+                flex-direction: column;
+                gap: 8px;
+            }
+            
+            .products-grid,
+            .package-grid,
+            .payment-options,
+            .testimonials-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .stats-container {
+                flex-direction: column;
+                gap: 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Loading Page -->
+    <div id="loading-page">
+        <div class="loading-content">
+            <div class="loading-logo"><i class="fas fa-server"></i>Danz Store</div>
+            <div class="welcome-text">Selamat Datang</div>
+            <div class="loading-bar-container">
+                <div class="loading-bar" id="loading-bar"></div>
+            </div>
+            <div class="loading-percentage" id="loading-percentage">0%</div>
+        </div>
+    </div>
+    
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="logo"><i class="fas fa-server"></i>Danz Store</div>
+            <p class="tagline">Hosting SA-MP Premium Terbaik - Server Stabil & Performa Optimal</p>
+        </div>
+    </header>
+    
+    <div class="container">
+        <!-- Navigation -->
+        <nav>
+            <ul>
+                <li><a href="#" class="nav-link active" data-section="products"><i class="fas fa-box"></i>Produk</a></li>
+                <li><a href="#" class="nav-link" data-section="payment"><i class="fas fa-credit-card"></i>Pembayaran</a></li>
+                <li><a href="#" class="nav-link" data-section="confirmation"><i class="fas fa-check-circle"></i>Konfirmasi</a></li>
+                <li><a href="#" class="nav-link" data-section="testimonials"><i class="fas fa-star"></i>Testimoni</a></li>
+            </ul>
+        </nav>
+        
+        <!-- Products Section -->
+        <section id="products" class="section active">
+            <h2 class="section-title">Hosting SA-MP Premium</h2>
+            <p class="section-subtitle">Solusi hosting terbaik untuk server SA-MP Anda dengan performa optimal dan uptime 99.9%</p>
+            
+            <div class="products-grid">
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="https://files.catbox.moe/5yqu7q.png" alt="HOSTING SAMP PREMIUM">
+                    </div>
+                    <div class="product-info">
+                        <div class="product-title">HOSTING SA-MP PREMIUM</div>
+                        <div class="product-price">Rp 4.000 - Rp 30.000</div>
+                        <button class="btn btn-primary" onclick="selectProduct(1)"><i class="fas fa-shopping-cart"></i>Beli Sekarang</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="product-features">
+                <h3>Fitur Unggulan Hosting SA-MP Premium</h3>
+                <div class="features-list">
+                    <div class="feature-item">
+                        <i class="fas fa-bolt"></i>
+                        <span>Server dengan performa tinggi</span>
+                    </div>
+                    <div class="feature-item">
+                        <i class="fas fa-shield-alt"></i>
+                        <span>Keamanan terjamin - ANTI DDOS</span>
+                    </div>
+                    <div class="feature-item">
+                        <i class="fas fa-clock"></i>
+                        <span>Uptime 99.9%</span>
+                    </div>
+                    <div class="feature-item">
+                        <i class="fas fa-headset"></i>
+                        <span>Support 24/7</span>
+                    </div>
+                    <div class="feature-item">
+                        <i class="fas fa-rocket"></i>
+                        <span>Setup cepat & mudah</span>
+                    </div>
+                    <div class="feature-item">
+                        <i class="fas fa-sync-alt"></i>
+                        <span>Backup otomatis</span>
+                    </div>
+                    <div class="feature-item">
+                        <i class="fas fa-tachometer-alt"></i>
+                        <span>ANTI DELAY - Ping GG</span>
+                    </div>
+                    <div class="feature-item">
+                        <i class="fas fa-tags"></i>
+                        <span>Harga MURMER</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Payment Section -->
+        <section id="payment" class="section">
+            <h2 class="section-title">Pembayaran</h2>
+            <p class="section-subtitle">Pilih paket hosting dan metode pembayaran yang Anda inginkan</p>
+            
+            <h3 style="margin-top: 30px; font-size: 24px; font-weight: 700;">Pilih Paket Hosting</h3>
+            <div class="package-grid">
+                <div class="package-card" onclick="selectPackage(1)">
+                    <div class="package-name">PAKET 1</div>
+                    <div class="package-price">Rp 4.000</div>
+                    <div class="package-features">
+                        <div class="package-feature"><i class="fas fa-microchip"></i> 100 CPU</div>
+                        <div class="package-feature"><i class="fas fa-users"></i> 25 Slot Player</div>
+                        <div class="package-feature"><i class="fas fa-globe"></i> Singapore</div>
+                    </div>
+                </div>
+                
+                <div class="package-card" onclick="selectPackage(2)">
+                    <div class="package-name">PAKET 2</div>
+                    <div class="package-price">Rp 5.000</div>
+                    <div class="package-features">
+                        <div class="package-feature"><i class="fas fa-microchip"></i> 100 CPU</div>
+                        <div class="package-feature"><i class="fas fa-users"></i> 35 Slot Player</div>
+                        <div class="package-feature"><i class="fas fa-globe"></i> Singapore</div>
+                    </div>
+                </div>
+                
+                <div class="package-card" onclick="selectPackage(3)">
+                    <div class="package-name">PAKET 3</div>
+                    <div class="package-price">Rp 7.000</div>
+                    <div class="package-features">
+                        <div class="package-feature"><i class="fas fa-microchip"></i> 150 CPU</div>
+                        <div class="package-feature"><i class="fas fa-users"></i> 50 Slot Player</div>
+                        <div class="package-feature"><i class="fas fa-globe"></i> Singapore</div>
+                    </div>
+                </div>
+                
+                <div class="package-card" onclick="selectPackage(4)">
+                    <div class="package-name">PAKET 4</div>
+                    <div class="package-price">Rp 10.000</div>
+                    <div class="package-features">
+                        <div class="package-feature"><i class="fas fa-microchip"></i> 200 CPU</div>
+                        <div class="package-feature"><i class="fas fa-users"></i> 60 Slot Player</div>
+                        <div class="package-feature"><i class="fas fa-globe"></i> Singapore</div>
+                    </div>
+                </div>
+                
+                <div class="package-card" onclick="selectPackage(5)">
+                    <div class="package-name">PAKET 5</div>
+                    <div class="package-price">Rp 13.000</div>
+                    <div class="package-features">
+                        <div class="package-feature"><i class="fas fa-microchip"></i> 300 CPU</div>
+                        <div class="package-feature"><i class="fas fa-users"></i> 100 Slot Player</div>
+                        <div class="package-feature"><i class="fas fa-globe"></i> Singapore</div>
+                    </div>
+                </div>
+                
+                <div class="package-card" onclick="selectPackage(6)">
+                    <div class="package-name">PAKET 6</div>
+                    <div class="package-price">Rp 15.000</div>
+                    <div class="package-features">
+                        <div class="package-feature"><i class="fas fa-microchip"></i> 300 CPU</div>
+                        <div class="package-feature"><i class="fas fa-users"></i> 120 Slot Player</div>
+                        <div class="package-feature"><i class="fas fa-globe"></i> Singapore</div>
+                    </div>
+                </div>
+                
+                <div class="package-card" onclick="selectPackage(7)">
+                    <div class="package-name">PAKET 7</div>
+                    <div class="package-price">Rp 20.000</div>
+                    <div class="package-features">
+                        <div class="package-feature"><i class="fas fa-microchip"></i> 500 CPU</div>
+                        <div class="package-feature"><i class="fas fa-users"></i> 200 Slot Player</div>
+                        <div class="package-feature"><i class="fas fa-globe"></i> Singapore</div>
+                    </div>
+                </div>
+                
+                <div class="package-card" onclick="selectPackage(8)">
+                    <div class="package-name">PAKET 8</div>
+                    <div class="package-price">Rp 30.000</div>
+                    <div class="package-features">
+                        <div class="package-feature"><i class="fas fa-microchip"></i> 550 CPU</div>
+                        <div class="package-feature"><i class="fas fa-users"></i> 240 Slot Player</div>
+                        <div class="package-feature"><i class="fas fa-globe"></i> Singapore</div>
+                    </div>
+                </div>
+            </div>
+            
+            <h3 style="margin-top: 50px; font-size: 24px; font-weight: 700;">Pilih Metode Pembayaran</h3>
+            <div class="payment-options">
+                <div class="payment-option" onclick="selectPayment('gopay')">
+                    <div class="payment-icon"><i class="fas fa-wallet"></i></div>
+                    <h3>GoPay</h3>
+                    <p>Bayar menggunakan GoPay</p>
+                </div>
+                
+                <div class="payment-option" onclick="selectPayment('dana')">
+                    <div class="payment-icon"><i class="fas fa-money-bill-wave"></i></div>
+                    <h3>DANA</h3>
+                    <p>Bayar menggunakan DANA</p>
+                </div>
+                
+                <div class="payment-option" onclick="selectPayment('ovo')">
+                    <div class="payment-icon"><i class="fas fa-mobile-alt"></i></div>
+                    <h3>OVO</h3>
+                    <p>Bayar menggunakan OVO</p>
+                </div>
+            </div>
+            
+            <div id="payment-details" style="display: none; margin-top: 40px; padding: 30px; background: linear-gradient(135deg, rgba(102, 126, 234, 0.05), rgba(118, 75, 162, 0.05)); border-radius: 20px;">
+                <h3 style="font-size: 22px; margin-bottom: 20px;">Instruksi Pembayaran</h3>
+                <div id="payment-instruction"></div>
+                <div style="margin-top: 30px;">
+                    <a href="https://wa.me/6281234567890" class="whatsapp-btn" target="_blank">
+                        <i class="fab fa-whatsapp"></i> Konfirmasi via WhatsApp
+                    </a>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Testimonials Section -->
+        <section id="testimonials" class="section">
+            <h2 class="section-title">Testimoni Pelanggan</h2>
+            <p class="section-subtitle">Apa kata pelanggan kami tentang Hosting SA-MP Premium dari Danz Store?</p>
+            
+            <div class="testimonials-container">
+                <div class="testimonial-card">
+                    <div class="testimonial-header">
+                        <div class="user-avatar"><i class="fas fa-user-circle"></i></div>
+                        <div style="flex: 1;">
+                            <h4 style="font-weight: 700; font-size: 18px;">Ahmad S.</h4>
+                            <p style="color: #999; font-size: 14px;">Hosting SA-MP Premium</p>
+                        </div>
+                        <div class="rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </div>
+                    <p style="color: #666; font-style: italic; line-height: 1.6;">
+                        "Hosting SA-MP nya mantap banget! Server stabil dan support nya responsif. Recommended!"
+                    </p>
+                </div>
+                
+                <div class="testimonial-card">
+                    <div class="testimonial-header">
+                        <div class="user-avatar"><i class="fas fa-user-circle"></i></div>
+                        <div style="flex: 1;">
+                            <h4 style="font-weight: 700; font-size: 18px;">Rizki M.</h4>
+                            <p style="color: #999; font-size: 14px;">Hosting SA-MP Premium</p>
+                        </div>
+                        <div class="rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </div>
+                    <p style="color: #666; font-style: italic; line-height: 1.6;">
+                        "Sudah 6 bulan pakai hosting dari Danz Store, server lancar jaya tanpa kendala. Harga juga murah!"
+                    </p>
+                </div>
+                
+                <div class="testimonial-card">
+                    <div class="testimonial-header">
+                        <div class="user-avatar"><i class="fas fa-user-circle"></i></div>
+                        <div style="flex: 1;">
+                            <h4 style="font-weight: 700; font-size: 18px;">Budi P.</h4>
+                            <p style="color: #999; font-size: 14px;">Hosting SA-MP Premium</p>
+                        </div>
+                        <div class="rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </div>
+                    <p style="color: #666; font-style: italic; line-height: 1.6;">
+                        "Ping server rendah banget, player di server saya senang karena tidak ada lag. Terima kasih Danz Store!"
+                    </p>
+                </div>
+            </div>
+            
+            <div class="stats-container">
+                <div class="stat-item">
+                    <div class="stat-number">500+</div>
+                    <div class="stat-label">Server Terhosting</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">99.9%</div>
+                    <div class="stat-label">Uptime</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">98%</div>
+                    <div class="stat-label">Kepuasan Pelanggan</div>
+                </div>
+            </div>
+            
+            <div class="testimonial-cta">
+                <h3>Siap Meningkatkan Performa Server SA-MP Anda?</h3>
+                <p style="margin: 15px 0; opacity: 0.95; font-size: 17px;">Bergabunglah dengan ratusan pemilik server yang telah mempercayai hosting kami</p>
+                <a href="#" class="testimonial-btn nav-link" data-section="products"><i class="fas fa-shopping-cart"></i>Pesan Sekarang</a>
+                <p style="margin-top: 30px; font-size: 16px;">Butuh bantuan? Hubungi kami:</p>
+                <div style="font-weight: 700; font-size: 18px; margin-top: 10px;">WhatsApp: +62 812-3456-7890</div>
+            </div>
+        </section>
+        
+        <!-- Confirmation Section -->
+        <section id="confirmation" class="section">
+            <h2 class="section-title">Konfirmasi Pembayaran</h2>
+            <p class="section-subtitle">Silakan konfirmasi pembayaran Anda setelah melakukan transfer</p>
+            
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; margin: 40px 0;">
+                <div style="text-align: center; padding: 40px 30px; background: white; border: 2px solid #f0f0f0; border-radius: 20px; transition: all 0.3s ease;">
+                    <div style="font-size: 60px; margin-bottom: 20px; background: linear-gradient(135deg, #25D366 0%, #128C7E 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+                        <i class="fab fa-whatsapp"></i>
+                    </div>
+                    <h3 style="font-size: 22px; font-weight: 700; margin-bottom: 15px;">WhatsApp</h3>
+                    <p style="color: #666; margin-bottom: 25px;">Konfirmasi pembayaran melalui WhatsApp untuk respon yang cepat</p>
+                    <a href="https://wa.me/6281234567890" class="whatsapp-btn" target="_blank">
+                        <i class="fab fa-whatsapp"></i> Konfirmasi Sekarang
+                    </a>
+                </div>
+                
+                <div style="text-align: center; padding: 40px 30px; background: white; border: 2px solid #f0f0f0; border-radius: 20px; transition: all 0.3s ease;">
+                    <div style="font-size: 60px; margin-bottom: 20px; background: linear-gradient(135deg, #0088cc 0%, #005580 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+                        <i class="fab fa-telegram"></i>
+                    </div>
+                    <h3 style="font-size: 22px; font-weight: 700; margin-bottom: 15px;">Telegram</h3>
+                    <p style="color: #666; margin-bottom: 25px;">Konfirmasi pembayaran melalui Telegram</p>
+                    <a href="https://t.me/danzstore" class="telegram-btn" target="_blank">
+                        <i class="fab fa-telegram"></i> Konfirmasi Sekarang
+                    </a>
+                </div>
+            </div>
+            
+            <div style="background: #fff9e6; border-left: 5px solid #ffc107; padding: 25px; border-radius: 15px; margin: 30px 0;">
+                <h3 style="font-size: 20px; margin-bottom: 15px; color: #333;"><i class="fas fa-exclamation-circle"></i> Informasi Penting</h3>
+                <p style="margin-bottom: 15px; color: #666;">Pastikan untuk menyertakan bukti transfer dan informasi berikut saat konfirmasi:</p>
+                <ul style="padding-left: 25px; color: #666; line-height: 1.8;">
+                    <li>Nama lengkap</li>
+                    <li>Paket yang dipilih</li>
+                    <li>Tanggal dan waktu transfer</li>
+                    <li>Jumlah transfer</li>
+                </ul>
+            </div>
+        </section>
+    </div>
+    
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 Danz Store - Hosting SA-MP Premium. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Loading Animation
+        document.addEventListener('DOMContentLoaded', function() {
+            const loadingPage = document.getElementById('loading-page');
+            const loadingBar = document.getElementById('loading-bar');
+            const loadingPercentage = document.getElementById('loading-percentage');
+            
+            let progress = 0;
+            
+            const interval = setInterval(() => {
+                progress += Math.random() * 10;
+                if (progress >= 100) {
+                    progress = 100;
+                    clearInterval(interval);
+                    
+                    setTimeout(() => {
+                        loadingPage.style.opacity = '0';
+                        setTimeout(() => {
+                            loadingPage.style.display = 'none';
+                        }, 800);
+                    }, 500);
+                }
+                
+                loadingBar.style.width = progress + '%';
+                loadingPercentage.textContent = Math.round(progress) + '%';
+            }, 200);
+        });
+        
+        // Navigation
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                document.querySelectorAll('.nav-link').forEach(item => {
+                    item.classList.remove('active');
+                });
+                this.classList.add('active');
+                
+                const sectionId = this.getAttribute('data-section');
+                document.querySelectorAll('.section').forEach(section => {
+                    section.classList.remove('active');
+                });
+                document.getElementById(sectionId).classList.add('active');
+                
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+        });
+        
+        // Product Selection
+        function selectProduct(productId) {
+            document.querySelectorAll('.nav-link').forEach(item => {
+                item.classList.remove('active');
+            });
+            document.querySelector('[data-section="payment"]').classList.add('active');
+            
+            document.querySelectorAll('.section').forEach(section => {
+                section.classList.remove('active');
+            });
+            document.getElementById('payment').classList.add('active');
+            
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+        
+        // Package Selection
+        function selectPackage(packageId) {
+            document.querySelectorAll('.package-card').forEach(card => {
+                card.classList.remove('selected');
+            });
+            event.currentTarget.classList.add('selected');
+        }
+        
+        // Payment Selection
+        function selectPayment(method) {
+            document.querySelectorAll('.payment-option').forEach(option => {
+                option.classList.remove('selected');
+            });
+            event.currentTarget.classList.add('selected');
+            
+            const paymentDetails = document.getElementById('payment-details');
+            const paymentInstruction = document.getElementById('payment-instruction');
+            
+            const instructions = {
+                'gopay': '<p style="font-size: 16px; margin-bottom: 15px;">Silakan transfer ke GoPay:</p><div style="font-size: 22px; font-weight: 700; color: #667eea; margin: 15px 0;">0812-3456-7890</div>',
+                'dana': '<p style="font-size: 16px; margin-bottom: 15px;">Silakan transfer ke DANA:</p><div style="font-size: 22px; font-weight: 700; color: #667eea; margin: 15px 0;">0812-3456-7890</div>',
+                'ovo': '<p style="font-size: 16px; margin-bottom: 15px;">Silakan transfer ke OVO:</p><div style="font-size: 22px; font-weight: 700; color: #667eea; margin: 15px 0;">0812-3456-7890</div>'
+            };
+            
+            paymentInstruction.innerHTML = instructions[method];
+            paymentDetails.style.display = 'block';
+        }
+    </script>
+</body>
+</html>
